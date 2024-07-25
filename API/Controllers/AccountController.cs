@@ -28,8 +28,8 @@ namespace API.Controllers
                     return BadRequest("Username is taken");
                 }
 
-            using( var hmac = new HMACSHA512())
-            {  
+       /*      using( var hmac = new HMACSHA512()) */
+          /*   {  
                 try
                 {
 
@@ -59,9 +59,9 @@ namespace API.Controllers
                 }
 
               
-            };
+            }; */
           
-           
+           return Ok();
         }
         
         [HttpPost("login")]
