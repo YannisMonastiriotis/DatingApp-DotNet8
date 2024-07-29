@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { NavComponent } from "./nav/nav.component";
 import { AccountService } from './_services/account.service';
 import { HomeComponent } from "./home/home.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'app-root',

@@ -8,6 +8,7 @@ using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace API.Data
 {
@@ -23,9 +24,11 @@ namespace API.Data
  
         public async Task<IEnumerable<MemberDto?>> GetMembersAsync()
         {
-            return await context.Users
+            var users =   await context.Users
             .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
             .ToListAsync();
+
+            return users;
         }
 
         public async Task<AppUser?> GetUserByIdAsync(int id)

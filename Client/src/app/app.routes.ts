@@ -15,12 +15,11 @@ export const routes: Routes = [
         canActivate: [authGuard],
         children: [
             { path: 'members', component: MemberListComponent, canActivate: [authGuard] },
-            { path: 'members/:id', component: MemberDetailComponent },
+            { path: 'members/:username', component: MemberDetailComponent },
             { path: 'lists', component: ListsComponent },
             { path: 'messages', component: MessagesComponent }
         ]
     },
     {path: 'errors', component: TestErrorsComponent},
     { path: '**', component: HomeComponent, pathMatch: 'full' }
-
 ];
