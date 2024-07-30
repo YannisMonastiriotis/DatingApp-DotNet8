@@ -17,10 +17,12 @@ export class MemberDetailComponent implements OnInit {
   private route = inject(ActivatedRoute)
   member?: Member;
   images: GalleryItem[] =[];
+  currentPhotoUrl?: string;
   
   ngOnInit(): void {
     console.log('ngongintmemberdetails')
     this.loadMember()
+    this.setMainPhotoUrl();
   }
   loadMember(){
     const username = this.route.snapshot.paramMap.get('username');
@@ -35,5 +37,13 @@ export class MemberDetailComponent implements OnInit {
       }
          
     })
+  }
+
+  
+  setMainPhotoUrl(): void {
+    const mainPhoto = this.member?.photos.find(photo => photo.isMain);
+    if (mainPhoto) {
+      this.currentPhotoUrl = mainPhoto.url;
+    }
   }
 }
