@@ -60,6 +60,7 @@ export class PhotoEditorComponent implements OnInit {
       }
     })
   }
+
   initializeUploader(){
     this.uploader = new FileUploader({
       url: this.baseUrl +'users/add-photo',
@@ -80,6 +81,22 @@ export class PhotoEditorComponent implements OnInit {
 
       updatedMember.photos.push(photo);
       this.memberChange.emit(updatedMember);
+      if(photo.isMain)
+      {
+        const user = this.accountService.currentUser();
+        if(user){
+          user.photoUrl = photo.url;
+          this.accountService.setCurrentUser(user)
+        }
+
+        const updatedMember = {...this.member()}
+        updatedMember.photoUrl = photo.url;
+        updatedMember.photos.forEach(p=>{
+          if(p.isMain) p.isMain = false;
+          if(p.id === photo.id) p.isMain = true;
+        });
+        this.memberChange.emit(updatedMember);
+      }
     }
 }
 }

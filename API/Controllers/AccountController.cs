@@ -9,6 +9,7 @@ using API.Data;
 using API.Dtos;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,11 @@ using Microsoft.Extensions.Logging;
 namespace API.Controllers
 {
 
-    public class AccountController(DataContext context,ITokenService tokenService) : BaseApiController
+    public class AccountController(
+        DataContext context,
+    ITokenService tokenService,
+     IMapper mapper
+     ) : BaseApiController
     {
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
@@ -28,18 +33,16 @@ namespace API.Controllers
                     return BadRequest("Username is taken");
                 }
 
-       /*      using( var hmac = new HMACSHA512()) */
-          /*   {  
+          using( var hmac = new HMACSHA512()) 
+           {  
                 try
                 {
 
-                var user = new AppUser()
-                {
-                    UserName = registerDto.Username.ToLower(),
-                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                    PasswordSalt = hmac.Key
-                };
-
+                var user = mapper.Map<AppUser>(registerDto);
+                
+                user.UserName =registerDto.Username.ToLower();
+                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+                user.PasswordSalt = hmac.Key;
                 context.Users.Add(user);
 
                 await context.SaveChangesAsync();
@@ -48,20 +51,20 @@ namespace API.Controllers
                 return new UserDto
                 {
                     Username = user.UserName,
-                    Token = tokenService.CreateToken(user)
+                    Token = tokenService.CreateToken(user),
+                    KnownAs = user.KnownAs
                 };
 
                 }
                 catch(Exception ex)
                 {
                     //Log exception here
-                    return BadRequest("Opps something went wrong!");
+                    return BadRequest(ex.Message);
                 }
 
               
-            }; */
+            }; 
           
-           return Ok();
         }
         
         [HttpPost("login")]
@@ -91,7 +94,8 @@ namespace API.Controllers
                 {
                     Username = user.UserName,
                     Token = tokenService.CreateToken(user),
-                    PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
+                    PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+                    KnownAs = user.KnownAs
                 };
         }
         private async Task<bool> UserExists(string username)
