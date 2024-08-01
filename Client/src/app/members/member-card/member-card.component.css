@@ -22,13 +22,33 @@
     margin-right: auto;
     margin-left: auto;
     opacity:0;
+    
 }
-
+.card{
+    
+}
 .card-img-wrapper:hover .member-icons{
     bottom: 0;
     opacity: 1;
+  
 }
 
 .animate{
     transition: all 0.3s ease-in-out;
+}
+
+.card {
+    border: 2px solid #ccc; /* Set a light gray border */
+    border-radius: 8px; /* Add rounded corners */
+    transition: border-color 0.3s ease-in-out; /* Smooth transition for border color */
+}
+
+/* Change border color on hover */
+.card:hover {
+    border-color: #66afe9; /* Blue border on hover */
+}
+
+/* Optional: Change border on focus for better accessibility */
+.card:focus-within {
+    border-color: #66afe9; /* Blue border when a child element is focused */
 }
