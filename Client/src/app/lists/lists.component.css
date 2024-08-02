@@ -1,0 +1,137 @@
+/* Container for the entire layout */
+.container {
+    max-width: 120%; /* Increased maximum width to accommodate more content */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 0 40px; /* Add side padding to the container */
+    background-color: #fffcfc; /* Light gray background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(71, 128, 161, 0.1); /* Light shadow for depth */
+    text-align: center; 
+}
+
+/* Container for the form */
+.btn {
+    background-color: #50c5d7; /* Light gray background */
+    padding: 15px; /* Add padding to the form */
+    box-shadow: 0 4px 6px rgb(255, 255, 255); /* Light shadow */
+    max-width: 600px; /* Maximum width for the form */
+    margin: 1px auto; /* Center the form horizontally */
+     /* Use flexbox for layout */
+    flex-wrap: wrap-reverse; /* Wrap items to the next line */
+    gap: 15px; /* Space between flex items */
+   
+    border:50px;
+}
+
+.btn-group{
+    margin-left:31%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: oblique;
+    color:whitesmoke;
+}
+/* Flex container styling */
+.d-flex {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically center items */
+    gap: 10px; /* Space between label and input */
+    flex: 1 1 calc(50% - 30px); /* Flex-grow and flex-basis for responsive layout */
+}
+
+/* Label styling */
+label {
+    font-weight: 600; /* Bold font for labels */
+    color: #333; /* Dark text for contrast */
+    white-space: nowrap; /* Prevent label from wrapping */
+}
+
+/* Input and select styling */
+input[type="number"],
+select {
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 5px 10px; /* Inner padding */
+    background-color: #fff; /* White background for inputs */
+    width: 100%; /* Full width to fill the container */
+    transition: border-color 0.3s; /* Smooth border transition */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/* Input focus styling */
+input[type="number"]:focus,
+select:focus {
+    border-color: #66afe9; /* Blue border on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.5); /* Focus shadow */
+}
+
+/* Button styling */
+button {
+    border-radius: 4px; /* Rounded corners */
+    padding: 8px 12px; /* Button padding */
+    margin-top: 10px; /* Space above buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+/* Button hover effect */
+button:hover {
+    opacity: 0.9; /* Slight transparency on hover */
+   
+}
+
+/* Align buttons to the right */
+button {
+    
+    margin-left: auto; /* Push buttons to the end of the flex container */
+}
+
+/* Styling for the title container */
+.text-center {
+    text-align: center; /* Center the text horizontally */
+    margin-top: 20px; /* Space above the title */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+/* Styling for the H2 title */
+.text-center h2 {
+    font-size: 24px; /* Font size for the title */
+    color: #50c5d7; /* Soft gray color for the text */
+    font-weight: 500; /* Medium weight for less emphasis */
+    text-shadow: 0 1px 2px #ffffffdc; /* Light shadow for depth */
+    letter-spacing: 1px; /* Spacing between letters */
+    line-height: 1.4; /* Line height for readability */
+    background-color: #ffffff; /* Light gray background matching the form */
+    padding:  10px 16%; /* Padding for space around the text */
+    border-radius: 8px; /* Rounded corners */
+    display: inline-block; /* Inline block for background to wrap */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Light shadow for the title */
+}
+
+/* Member cards row styling */
+.member-cards {
+    display: flex; /* Use flexbox for horizontal alignment */
+    flex-wrap: wrap; /* Wrap items to the next line */
+    justify-content: center; /* Center items horizontally */
+    gap: 15px; /* Space between cards */
+    padding: 20px 0; /* Padding for spacing */
+}
+
+/* Member card column styling */
+.col-2 {
+    flex: 0 0 16.6667%; /* Each column takes up 1/6 of the row width */
+    max-width: 16.6667%; /* Ensure column width is consistent */
+    box-sizing: border-box; /* Include padding in the total width calculation */
+}
+
+/* Adjust column size for smaller screens */
+@media (max-width: 768px) {
+    .col-2 {
+        flex: 0 0 50%; /* Adjust to two columns per row */
+        max-width: 50%; /* Ensure two columns take up full width */
+    }
+
+    .text-center h2 {
+        font-size: 20px; /* Smaller font size on mobile */
+        padding: 8px 16px; /* Adjust padding for mobile */
+    }
+}
