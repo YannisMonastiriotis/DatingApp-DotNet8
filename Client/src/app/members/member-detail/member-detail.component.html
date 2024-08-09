@@ -1,4 +1,4 @@
-@if(member) {
+
     <div class="row">
         <div class="col-4">
             <div class="card">
@@ -59,9 +59,9 @@
                     <app-members-messages 
                     [username]="member.username"
                     [messages]="messages"
+                    (updateMessages)="onUpdateMessages($event)"
                     ></app-members-messages>
                 </tab>
             </tabset>
         </div>
     </div>
-}

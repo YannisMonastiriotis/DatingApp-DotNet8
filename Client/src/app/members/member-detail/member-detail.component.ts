@@ -18,10 +18,10 @@ import { MessageService } from '../../_services/message.service';
   styleUrl: './member-detail.component.css'
 })
 export class MemberDetailComponent implements OnInit {
-  @ViewChild('memberTabs') memberTabs?: TabsetComponent
+  @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent
   private memberService = inject(MembersService)
   private route = inject(ActivatedRoute)
-  member?: Member;
+  member: Member = {} as Member;
   images: GalleryItem[] =[];
   currentPhotoUrl?: string;
   activeTab?: TabDirective;
@@ -30,7 +30,17 @@ export class MemberDetailComponent implements OnInit {
   
   ngOnInit(): void {
     //console.log('ngongintmemberdetails')
-    this.loadMember()
+    this.route.data.subscribe({
+      next: data => {
+        this.member = data['member'];
+        this.member && this.member.photos.map(p =>{
+          this.images.push(new ImageItem({src:p.url, thumb: p.url}))
+        })
+      }
+    })
+
+  
+  
     this.setMainPhotoUrl();
 
     this.route.queryParams.subscribe({
@@ -40,6 +50,10 @@ export class MemberDetailComponent implements OnInit {
     })
   }
 
+  onUpdateMessages(event:Message){
+    this.messages.push(event);
+  }
+  
   selectTab(heading: string){
     if(this.memberTabs){
       const messageTab = this.memberTabs.tabs.find(x => x.heading === heading)
@@ -56,20 +70,20 @@ export class MemberDetailComponent implements OnInit {
     })
   }
 }
-  loadMember(){
-    const username = this.route.snapshot.paramMap.get('username');
-    if (!username) return;
-    this.memberService.getMember(username).subscribe({
-      next: member=>{
-        this.member = member;
-        member.photos.map(p =>{
-          this.images.push(new ImageItem({src:p.url, thumb: p.url}))
-        })
+  // loadMember(){
+  //   const username = this.route.snapshot.paramMap.get('username');
+  //   if (!username) return;
+  //   this.memberService.getMember(username).subscribe({
+  //     next: member=>{
+  //       this.member = member;
+  //       member.photos.map(p =>{
+  //         this.images.push(new ImageItem({src:p.url, thumb: p.url}))
+  //       })
 
-      }
+  //     }
          
-    })
-  }
+  //   })
+  // }
 
   
   setMainPhotoUrl(): void {
