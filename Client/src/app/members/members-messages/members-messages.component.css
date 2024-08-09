@@ -1,46 +1,28 @@
 /* Container for the entire layout */
-.rounded-circle{
-    max-height: 50px;
-}
-
-.btn-danger:hover {
-    color: black; /* Change text color to black on hover */
-}
-
-#mainButtons{
-    margin: 10px;
-    padding: 20px;
-}
 .container {
     max-width: 120%; /* Increased maximum width to accommodate more content */
     margin: 0 auto; /* Center the container horizontally */
     padding: 0 40px; /* Add side padding to the container */
-    background-color: #fffcfc; /* Light gray background */
+    background-color: #f7f7f7; /* Light gray background */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 8px rgba(71, 128, 161, 0.1); /* Light shadow for depth */
-    text-align: center; 
 }
-
+.rounded-circle{
+    width: 40px;
+}
 /* Container for the form */
-.btn {
-    background-color: #50c5d7; /* Light gray background */
-    padding: 15px; /* Add padding to the form */
-    box-shadow: 0 4px 6px rgb(255, 255, 255); /* Light shadow */
+form {
+    background-color: #f7f7f7; /* Light gray background */
+    padding: 20px; /* Add padding to the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
     max-width: 600px; /* Maximum width for the form */
-    margin: 1px auto; /* Center the form horizontally */
-     /* Use flexbox for layout */
-    flex-wrap: wrap-reverse; /* Wrap items to the next line */
+    margin: 20px auto; /* Center the form horizontally */
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Wrap items to the next line */
     gap: 15px; /* Space between flex items */
-   
-    border:50px;
 }
 
-.btn-group{
-    margin-left:31%;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-style: oblique;
-    color:whitesmoke;
-}
 /* Flex container styling */
 .d-flex {
     display: flex; /* Use flexbox for alignment */
@@ -67,7 +49,10 @@ select {
     transition: border-color 0.3s; /* Smooth border transition */
     box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
-
+input[type="text"]{
+    padding: 12px; 
+    margin: 10px; 
+}
 /* Input focus styling */
 input[type="number"]:focus,
 select:focus {
@@ -79,8 +64,8 @@ select:focus {
 /* Button styling */
 button {
     border-radius: 4px; /* Rounded corners */
-    padding: 8px 12px; /* Button padding */
-    margin-top: 10px; /* Space above buttons */
+    padding: 12px; /* Button padding */
+    margin: 10px; /* Space above buttons */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth background color transition */
 }
@@ -91,8 +76,8 @@ button:hover {
 }
 
 /* Align buttons to the right */
-button {
-    
+button[type="submit"],
+button[type="button"] {
     margin-left: auto; /* Push buttons to the end of the flex container */
 }
 
