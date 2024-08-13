@@ -9,6 +9,8 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { preventUnsavedChagesGuard } from './_guards/prevent-unsaved-chages.guard';
 import { memberDetailedResolver } from './_resolvers/member-detailed.resolver';
+import { AdminPanelComponent } from './adming/admin-panel/admin-panel.component';
+import { adminGuard } from './_guards/admin.guard';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -24,7 +26,8 @@ export const routes: Routes = [
                 component: MemberEditComponent ,
                  canDeactivate:[preventUnsavedChagesGuard]},
             { path: 'lists', component: ListsComponent },
-            { path: 'messages', component: MessagesComponent }
+            { path: 'messages', component: MessagesComponent },
+            {path : 'admin' , component: AdminPanelComponent, canActivate: [adminGuard] }
         ]
     },
     {path: 'errors', component: TestErrorsComponent},

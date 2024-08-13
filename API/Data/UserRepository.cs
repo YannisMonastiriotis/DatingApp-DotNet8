@@ -47,7 +47,7 @@ namespace API.Data
             };
 
         
-            return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
+            return await PagedList<MemberDto?>.CreateAsync(query.ProjectTo<MemberDto>(mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<AppUser?> GetUserByIdAsync(int id)
