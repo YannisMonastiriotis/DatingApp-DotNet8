@@ -2,6 +2,7 @@ import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { Member } from '../../Models/member';
 import { RouterLink } from '@angular/router';
 import { LikesService } from '../../_services/likes.service';
+import { PresenceService } from '../../_services/presence.service';
 
 
 @Component({
@@ -14,9 +15,12 @@ import { LikesService } from '../../_services/likes.service';
 export class MemberCardComponent implements OnInit {
   
   private likeService = inject(LikesService);
-  member = input.required<Member>();
-  hasLiked = computed(() => this.likeService.likeIds().includes(this.member().id))
+  private presenceService = inject(PresenceService);
 
+  member = input.required<Member>();
+  hasLiked = computed(() => this.likeService.likeIds().includes(this.member().id));
+  isOnline = computed(() => this.presenceService.onlineUsers().includes(this.member().username));
+  
   toggleLike(){
     this.likeService.toggleLike(this.member().id).subscribe({
       next:() => {
@@ -32,7 +36,8 @@ export class MemberCardComponent implements OnInit {
 
   ngOnInit(): void {
     //console.log(this.member().knownAs);
-    console.log(this.member().username);
+    console.log(this.member().age);
+
     this.setMainPhotoUrl();
   }
 
