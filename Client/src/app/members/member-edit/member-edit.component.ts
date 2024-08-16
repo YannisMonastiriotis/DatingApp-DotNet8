@@ -27,12 +27,14 @@ export class MemberEditComponent implements OnInit {
   };
   ngOnInit(): void {
     this.loadMember();
+  
   }
-
+  photoUrl: string | undefined;
   member?:Member;
   private accountService = inject(AccountService);
   private memberService = inject(MembersService);
   private toastr = inject(ToastrService);
+
 
   loadMember(){
     const user = this.accountService.currentUser();
@@ -53,8 +55,16 @@ export class MemberEditComponent implements OnInit {
  
   }
 
+  
+
   onMemberChange(event: Member)
   {
     this.member = event;
   }
+
+  getPhotoUrl(): string {
+    const mainPhoto = this.member?.photos?.find(photo => photo.isMain);
+    return mainPhoto?.url || './assets/user.png';
+  }
+  
 }

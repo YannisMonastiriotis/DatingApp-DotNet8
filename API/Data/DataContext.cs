@@ -19,6 +19,7 @@ namespace API.Data
 
         public DbSet<Message> Messages { get; set; }
 
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -60,6 +61,8 @@ namespace API.Data
             .HasOne(s => s.Sender)
             .WithMany(l => l.MessagesSent)
             .OnDelete(DeleteBehavior.Restrict);
+
+           
         }
 
     }

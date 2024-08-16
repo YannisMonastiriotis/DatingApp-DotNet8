@@ -15,7 +15,7 @@
         </div>
         <div class="col-4">
             <div class="card">
-                <img src="{{member.photoUrl || './assets/user.png'}}" 
+                <img [src]="getPhotoUrl()" 
                 alt="{{member.knownAs}}"
                 class="card-img img-thumbnail">
                 <div class="card-body">
@@ -37,6 +37,7 @@
                     </div>
                     <div class="card-footer">
                         <button 
+                        style="background-color: #008cba;"
                         [disabled]="!editForm.dirty"
                         form="editForm"
                          type="submit" 

@@ -20,7 +20,7 @@ export class MembersService {
 
   baseUrl = environment.apiUrl;
   memberCache =  new Map();
-  //members = signal<Member[]>([]);
+  members = signal<Member[]>([]);
   paginatedResult = signal<PaginatedResult<Member[]> | null>(null);
   
   user = this.accountService.currentUser();
@@ -66,6 +66,7 @@ export class MembersService {
 
   getMember(username: string) {
     const member: Member = [...this.memberCache.values()]
+    
     .reduce((arr , elem)=> arr.concat(elem.body), [])
     .find((m: Member) => m.username === username);
     
@@ -89,14 +90,14 @@ export class MembersService {
   setMainPhoto(photo: Photo)
   {
     return this.http.put(this.baseUrl + 'users/set-main-photo/' + photo.id, {}).pipe(
-      // tap(() => {
-      //   this.members.update(members => members.map(m =>{
-      //     if(m.photos.includes(photo)) {
-      //       m.photoUrl = photo.url
-      //     }
-      //     return m;
-      //   }))
-      // })
+      tap(() => {
+        this.members.update(members => members.map(m =>{
+          if(m.photos.includes(photo)) {
+            m.photoUrl = photo.url
+          }
+          return m;
+        }))
+      })
     )
   }
 

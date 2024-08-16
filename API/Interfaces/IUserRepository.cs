@@ -14,7 +14,6 @@ namespace API.Interfaces
         Task<AppUser?> GetUserByIdAsync(int id);
         void Update(AppUser appUser);
 
-        Task<bool> SaveAllAsync();
 
         Task<IEnumerable<AppUser?>> GetUsersAsync();
 
@@ -23,5 +22,7 @@ namespace API.Interfaces
         Task<PagedList<MemberDto?>> GetMembersAsync(UserParams userParams);
 
         Task<MemberDto?> GetMemberAsync(string username);
+
+        Task<bool> DeleteBasePhoto(int id);
     }
 }

@@ -1,0 +1,14 @@
+
+    <div class="modal-header" style="background-color: #ffffff; color: #ecf0f1; padding: 20px; border-top-left-radius: 12px; border-top-right-radius: 12px; text-align: center; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); border-bottom: none;">
+        <h4 class="modal-title" style="margin: 0; font-weight: 600; font-size: 24px;">{{title}}</h4>
+    </div>
+    <div class="modal-body" style="padding: 25px; font-size: 18px; line-height: 1.6; color: #a0b5ca; text-align: center; border-radius: 0px 0px 12px 12px;">
+        <p>{{message}}</p>
+    </div>
+    <div class="modal-footer" style="padding: 5px; display: flex; justify-content: space-around; background-color: #ecf0f1; border-bottom-left-radius: 12px; border-bottom-right-radius: 7px; box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);">
+        <button type="button" class="btn btn-success" style="background-color: #8ebfd6; border: none; padding: 12px 24px; font-size: 16px; color: white; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease;" (click)="confirm()">{{btnOkText}}</button>
+        <button type="button" class="btn btn-danger" style="background-color: #ff0000; border: none; padding: 12px 24px; font-size: 16px; color: white; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease;" (click)="decline()">{{btnCancelText}}</button>
+    </div>
+<!-- <div style="background-color: #f0f0f0; padding: 25px; font-size: 18px; line-height: 1.6; color: #6193c5; text-align: center; border-radius: 1px 1px 1px 1px; background-color: rgba(255, 255, 255, 0.5);">
+   
+</div> -->

@@ -21,15 +21,15 @@ namespace API.Helpers
 
             var userId = resultContext.HttpContext.User.GetUserId();
 
-            var repot = resultContext.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
-            var user = await repot.GetUserByIdAsync(userId);
+            var repot = resultContext.HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
+            var user = await repot.UserRepository.GetUserByIdAsync(userId);
             
             if(user == null)
             {
                 return;
             }
             user.LastActive = DateTime.UtcNow;
-            await repot.SaveAllAsync();
+            await repot.Complete();
         }
     }
 }

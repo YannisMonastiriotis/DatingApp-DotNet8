@@ -8,15 +8,50 @@ using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using SQLitePCL;
 
 namespace API.Data
 {
-    public class UserRepository(DataContext context, IMapper mapper) : IUserRepository
+    public class UserRepository(DataContext context, IMapper mapper, IConfiguration configuration) : IUserRepository
     {
-       public async Task<MemberDto?> GetMemberAsync(string username)
+        public async Task<bool> DeleteBasePhoto(int id)
+        {
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var isDeleted = false;
+
+            try
+            {
+                using (var connection = new SqliteConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    var deleteQuery = "DELETE FROM Photos WHERE Id = @id";
+
+                    using (var command = new SqliteCommand(deleteQuery, connection))
+                    {
+                        // Use correct parameter name
+                        command.Parameters.AddWithValue("@id", id);
+
+                        // Use ExecuteNonQueryAsync for async operations
+                        var rowsAffected = await command.ExecuteNonQueryAsync();
+                        isDeleted = rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions as appropriate
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                // Optionally, log the exception or handle it as needed
+            }
+
+            return isDeleted;
+        }
+
+        public async Task<MemberDto?> GetMemberAsync(string username)
         {
             return await context.Users
             .Where(x=>x.UserName == username)
@@ -68,11 +103,6 @@ namespace API.Data
             return await context.Users
             .Include(x => x.Photos)
             .ToListAsync();
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await context.SaveChangesAsync() > 0;
         }
 
         public async void Update(AppUser appUser)
