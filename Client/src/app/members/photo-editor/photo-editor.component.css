@@ -1,3 +1,52 @@
 .nv-file-over{
     border: dotted 3px greenyellow
 }
+.btn{
+  background-color: #6086d8;
+  color:#797676
+}
+.btn-not-main{
+  background-color: #ffffff;
+  color:#797676
+}
+.error-snackbar {
+    background-color: #f3a49e; /* Red color for errors */
+    color: white;
+  }
+
+  .photo-container img {
+    width: 100%; /* Ensures the image takes up the full width of its container */
+    height: auto; /* Maintains aspect ratio */
+    min-width: 150px; /* Set a minimum width */
+    min-height: 150px; /* Set a minimum height */
+    max-width: 100%; /* Ensures the image does not exceed its container's width */
+    object-fit: cover; /* Ensures that the image covers the container, maintaining its aspect ratio */
+  }
+  
+  .photo-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px; /* Optional: to match the thumbnail style */
+  }
+  
+  .img-thumbnail {
+    display: block;
+    width: 100; /* Make sure the image takes full width of the container */
+  }
+  
+  .unapproved {
+    opacity: 0.2; /* Reduce opacity for unapproved photos */
+  }
+  .text-overlay {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjusts for the top and left being at 50% */
+    background-color: rgba(255, 0, 0, 0.5); /* Light red background with some transparency */
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1.2em;
+    pointer-events: none; /* Makes sure the overlay doesn't block clicks on the image */
+  }

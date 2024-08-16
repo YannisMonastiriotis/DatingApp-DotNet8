@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using API.Dtos;
 using API.Entities;
 using API.Helpers;
 using API.Interfaces;
+using API.Services;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.Data.Sqlite;
@@ -17,6 +19,22 @@ namespace API.Data
 {
     public class UserRepository(DataContext context, IMapper mapper, IConfiguration configuration) : IUserRepository
     {
+        public  Task ApprovePhoto(Photo photo, AppUser user)
+        {
+           
+            if(!user.Photos.Any(x => x.IsMain)){
+                photo.IsMain = true;
+            }else{
+                photo.IsMain = false;
+            }
+
+            photo.IsAproved = true;
+           
+
+            context.SaveChanges();
+            return Task.CompletedTask;
+        }
+
         public async Task<bool> DeleteBasePhoto(int id)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -51,17 +69,25 @@ namespace API.Data
             return isDeleted;
         }
 
-        public async Task<MemberDto?> GetMemberAsync(string username)
+        public async Task<MemberDto?> GetMemberAsync(string username, bool isCurrentUser = false)
         {
-            return await context.Users
-            .Where(x=>x.UserName == username)
-            .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
-            .SingleOrDefaultAsync();
+          var query = context.Users
+          .Where(x => x.UserName == username)
+          .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
+          .AsQueryable();
+
+          if(isCurrentUser)
+          {
+            query = query.IgnoreQueryFilters();
+          }
+
+          return await query.FirstOrDefaultAsync();
         }
  
         public async Task<PagedList<MemberDto?>> GetMembersAsync(UserParams userParams)
         {
-            var query =  context.Users.AsQueryable();
+            var query =  context.Users 
+            .AsQueryable();
 
             query = query.Where(x => x.UserName != userParams.CurrentUsername);
 
@@ -80,8 +106,8 @@ namespace API.Data
                 "created" => query.OrderByDescending(x => x.Created),
                  _=> query.OrderByDescending(x => x.LastActive)
             };
-
-        
+            
+          
             return await PagedList<MemberDto?>.CreateAsync(query.ProjectTo<MemberDto>(mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
         }
 
@@ -90,7 +116,16 @@ namespace API.Data
           return await context.Users
           .FindAsync(id);
         }
-
+        public async Task<AppUser?> GetUserByPhotoIdAsync(int photoAppUserId)
+        {
+            var photo = await context.Photos.FindAsync(photoAppUserId);
+          return  photo != null ?
+            await context.Users
+            .Include(p => p.Photos)
+            .IgnoreQueryFilters()
+            .Where(p =>  p.Photos.Any(p=>p.Id == photoAppUserId))
+            .FirstOrDefaultAsync() : null;
+        }
         public async Task<AppUser?> GetUserByUsernameAsync(string username)
         {
           return await context.Users

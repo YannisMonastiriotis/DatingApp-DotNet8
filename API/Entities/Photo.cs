@@ -10,7 +10,8 @@ namespace API.Entities
         public required string Url {get;set;}
 
         public bool IsMain {get;set;}
-
+        
+        public bool IsAproved {get;set;}
         public string? PublicId {get;set;}
 
         public int AppUserId {get;set;}

@@ -1,0 +1,71 @@
+/* General container styling */
+.photo-management {
+    padding: 20px;
+    background-color: #f0f8ff; /* Light skyblue background */
+    min-height: 100vh;
+  }
+  
+  /* Header styling */
+  h1 {
+    text-align: center;
+    color: #4682b4; /* Steelblue color */
+    margin-bottom: 20px;
+  }
+  
+  /* Grid layout for photos */
+  .photo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* Card layout for individual photos */
+  .photo-card {
+    background-color: #ffffff; /* White background for the card */
+    border: 1px solid #b0c4de; /* Light steelblue border */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .photo-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .photo-info {
+    padding: 10px;
+  }
+  
+  .username {
+    font-weight: bold;
+    color: #4682b4; /* Steelblue color */
+    margin: 10px 0;
+  }
+  
+  button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+  }
+  
+  .approve-btn {
+    background-color: #32cd32; /* Limegreen for approve */
+    color: white;
+  }
+  
+  .reject-btn {
+    background-color: #ff4500; /* Orange-red for reject */
+    color: white;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  

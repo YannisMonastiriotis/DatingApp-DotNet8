@@ -19,10 +19,15 @@ namespace API.Data
 
         public DbSet<Message> Messages { get; set; }
 
+        public DbSet<Photo> Photos { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Photo>().HasQueryFilter(p => p.IsAproved);
+            //.HasOne(u => u.AppUser)
+            //.WithMany(ur => ur.Photos).HasForeignKey(p => p.AppUserId);
 
             modelBuilder.Entity<AppUser>()
             .HasMany(ur => ur.UserRoles)

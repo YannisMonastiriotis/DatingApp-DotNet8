@@ -23,7 +23,9 @@ public class UsersController(IUnitOfWork unitOfWork,
  [HttpGet]
   public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
   {
-    userParams.CurrentUsername = User.GetUsername();
+    var currentUsername =User.GetUsername();
+
+    userParams.CurrentUsername = currentUsername;
      var users = await unitOfWork.UserRepository.GetMembersAsync(userParams);
 
     Response.AddPaginationHeader(users);
@@ -48,8 +50,11 @@ public class UsersController(IUnitOfWork unitOfWork,
   [HttpGet("{username}")]
   public async Task<ActionResult<MemberDto>> GetUser(string username)
   {
+     var currentUsername = User.FindFirst(ClaimTypes.Name)?.Value;
 
-    var user = await unitOfWork.UserRepository.GetMemberAsync(username);
+    bool isCurrentUser = currentUsername == username;
+
+    var user = await unitOfWork.UserRepository.GetMemberAsync(username, isCurrentUser);
 
     if(user == null)
     {
@@ -102,8 +107,7 @@ public class UsersController(IUnitOfWork unitOfWork,
         PublicId = result.PublicId
     };
 
-    if(user.Photos.Count==0) photo.IsMain = true;
-
+   
     user.Photos.Add(photo);
     
     if(await unitOfWork.Complete())
@@ -157,7 +161,7 @@ public class UsersController(IUnitOfWork unitOfWork,
 
     if(user == null) return BadRequest("User not found");
 
-    var photo = user.Photos.FirstOrDefault(x => x.Id == photoid);
+    var photo = await unitOfWork.PhotoRepository.GetPhotoById(photoid);
 
     if(photo == null || photo.IsMain)
     {

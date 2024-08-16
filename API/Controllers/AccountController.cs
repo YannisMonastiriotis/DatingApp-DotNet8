@@ -41,7 +41,9 @@ namespace API.Controllers
                 var user = mapper.Map<AppUser>(registerDto);
                 
                 user.UserName =registerDto.Username.ToLower();
+
                
+
                 var result = await userManager.CreateAsync(user, registerDto.Password);
 
                 if(!result.Succeeded)
@@ -49,12 +51,15 @@ namespace API.Controllers
                     return BadRequest(result.Errors);
                 }
 
+                await userManager.AddToRoleAsync(user, "Member");
+                
                 return new UserDto
                 {
                     Username = user.UserName,
                     Token = await tokenService.CreateToken(user),
                     KnownAs = user.KnownAs,
                     Gender = user.Gender
+                    
                 };
 
                 }

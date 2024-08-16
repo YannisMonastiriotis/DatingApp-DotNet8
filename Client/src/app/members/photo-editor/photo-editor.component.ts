@@ -6,6 +6,7 @@ import { AccountService } from '../../_services/account.service';
 import { environment } from '../../../environments/environment';
 import { MembersService } from '../../_services/members.service';
 import { Photo } from '../../Models/photo';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-photo-editor',
@@ -21,7 +22,7 @@ export class PhotoEditorComponent implements OnInit {
   uploader?:FileUploader;
   hasBaseDropZoneOver = false;
   baseUrl = environment.apiUrl;
-
+  private snackBar = inject(MatSnackBar) // Inject MatSnackBar
   memberChange = output<Member>();
 
   ngOnInit(): void {
@@ -47,8 +48,16 @@ export class PhotoEditorComponent implements OnInit {
       next:_ =>{
         const user = this.accountService.currentUser();
         if(user){
-          user.photoUrl = photo.url;
-          this.accountService.setCurrentUser(user)
+          if(photo.isAproved !== false){
+            user.photoUrl = photo.url;
+            this.accountService.setCurrentUser(user)
+          }else{
+            this.snackBar.open('Invalid operation: Cannot set an unapproved photo as main.', 'Close', {
+              duration: 5000,
+              panelClass: ['error-snackbar'] // Optional: custom class for styling
+            });
+            return;
+          }
         }
         const updatedMember = {...this.member()}
         updatedMember.photoUrl = photo.url;

@@ -1,1 +1,17 @@
-<p>photo-management works!</p>
+<div class="photo-management">
+    <h1>Photo Management</h1>
+    
+    <!-- Display photos in a grid -->
+    <div class="photo-grid">
+        @for (photo of photos; track photo.id) {
+      <div class="photo-card">
+        <img [src]="photo.url" alt="Photo" class="photo-image" />
+        <div class="photo-info">
+          <p class="username">{{ photo.username }}</p>
+          <button (click)="approvePhoto(photo.id)" class="approve-btn">Approve</button>
+          <button (click)="rejectPhoto(photo.id)" class="reject-btn">Reject</button>
+        </div>
+      </div>}
+    </div>
+  </div>
+  
