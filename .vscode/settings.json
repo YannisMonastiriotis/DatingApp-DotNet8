@@ -1,1 +1,4 @@
-{}
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/09325fc5-bff9-46be-a542-a6a78f99fdf8/resourceGroups/DA-COURSE-RESOURCES/providers/Microsoft.Web/sites/dating-app-course-gm",
+    "appService.deploySubpath": "API\\bin\\Publish"
+}

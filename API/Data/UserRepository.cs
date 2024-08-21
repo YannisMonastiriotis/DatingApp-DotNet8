@@ -10,11 +10,9 @@ using API.Interfaces;
 using API.Services;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.Data.Sqlite;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
-using SQLitePCL;
-
 namespace API.Data
 {
     public class UserRepository(DataContext context, IMapper mapper, IConfiguration configuration) : IUserRepository
@@ -42,13 +40,13 @@ namespace API.Data
 
             try
             {
-                using (var connection = new SqliteConnection(connectionString))
+                using (var connection = new SqlConnection(connectionString))
                 {
                     await connection.OpenAsync();
 
                     var deleteQuery = "DELETE FROM Photos WHERE Id = @id";
 
-                    using (var command = new SqliteCommand(deleteQuery, connection))
+                    using (var command = new SqlCommand(deleteQuery, connection))
                     {
                         // Use correct parameter name
                         command.Parameters.AddWithValue("@id", id);
@@ -118,13 +116,12 @@ namespace API.Data
         }
         public async Task<AppUser?> GetUserByPhotoIdAsync(int photoAppUserId)
         {
-            var photo = await context.Photos.FindAsync(photoAppUserId);
-          return  photo != null ?
+          return  
             await context.Users
             .Include(p => p.Photos)
             .IgnoreQueryFilters()
             .Where(p =>  p.Photos.Any(p=>p.Id == photoAppUserId))
-            .FirstOrDefaultAsync() : null;
+            .FirstOrDefaultAsync();
         }
         public async Task<AppUser?> GetUserByUsernameAsync(string username)
         {
