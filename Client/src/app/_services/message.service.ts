@@ -7,6 +7,7 @@ import { setPaginatedResponse, setPaginationHeaders } from './paginationHelper';
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 import { User } from '../Models/User';
 import { Group } from '../Models/group';
+import { BusyService } from './busy.service';
 
 
 @Injectable({
@@ -20,9 +21,11 @@ export class MessageService {
   private http = inject(HttpClient);
   paginatedResult = signal<PaginatedResult<Message[]> | null>(null);
   messageThread = signal<Message[]>([]);
-  
+  private busyService = inject(BusyService);
+
 
   createHubConnection(user:User, otherUserName:string){
+    this.busyService.busy();
       this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl +'message?user=' + otherUserName, {
         accessTokenFactory: () => user.token
@@ -30,7 +33,7 @@ export class MessageService {
       .withAutomaticReconnect()
       .build();
 
-      this.hubConnection.start().catch(error => console.log(error))
+      this.hubConnection.start().catch(error => console.log(error)).finally(() => this.busyService.idle());
 
       this.hubConnection.on('ReceiveMessageThread', messages => {
         this.messageThread.set(messages);
