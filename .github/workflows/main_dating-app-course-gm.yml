@@ -9,6 +9,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
 jobs:
   build:
     runs-on: windows-latest
@@ -66,7 +69,7 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C94BC34C666B43EA977E48FF0ECF64B7 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_FAB21751CE43430FA67073015E78C106 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_91AF6F5203E8414D9EB8CA265D994FA9 }}
-
+          auth-type: 'oidc'  
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
