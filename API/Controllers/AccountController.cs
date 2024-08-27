@@ -24,7 +24,7 @@ namespace API.Controllers
      IMapper mapper
      ) : BaseApiController
     {
-        [HttpPost("register")]
+        [HttpPost("register")] //TestComment-CI/CD Test
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             var isExistingUser= await UserExists(registerDto.Username);

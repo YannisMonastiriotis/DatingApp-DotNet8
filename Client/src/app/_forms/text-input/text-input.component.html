@@ -10,11 +10,8 @@
       <label>{{label()}}</label>
   <div *ngIf="control.hasError('required')"
   class="invalid-feedback text-start">Please enter a {{label()}}</div>
-  <div *ngIf="control.hasError('minlength')"
-  class="invalid-feedback text-start">{{label()}} must be at least {{control.errors?.['minlength'].requiredLength}} characters</div>
-  <div *ngIf="control.hasError('maxlength')"
-  class="invalid-feedback text-start">{{label()}} must be at least {{control.errors?.['maxlength'].requiredLength}} characters</div>
   <div *ngIf="control.hasError('isMatching')"
  class="invalid-feedback text-start">Passwords do not match</div>
+ <div *ngIf="control.hasError('pattern')"
+ class="invalid-feedback text-start">The password must have one uppercase-lowercase letter, a special character and must be between 4 - 8 characters.</div>
 </div>
-
